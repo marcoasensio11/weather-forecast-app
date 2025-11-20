@@ -51,16 +51,40 @@
                     <h3>Hourly Forecast</h3>
                     <div class="temp-chart">
                         <div class="temp-line" id="hourly-container">
-                            <div class="temp-point active" data-temp="72" data-time="Now"></div>
-                            <div class="temp-point" data-temp="68" data-time="3PM"></div>
-                            <div class="temp-point" data-temp="65" data-time="6PM"></div>
-                            <div class="temp-point" data-temp="70" data-time="9PM"></div>
-                            <div class="temp-point" data-temp="75" data-time="12AM"></div>
-                            <div class="temp-point" data-temp="73" data-time="3AM"></div>
-                            <div class="temp-point" data-temp="71" data-time="6AM"></div>
-                            <div class="temp-point" data-temp="69" data-time="9AM"></div>
+                            <div class="temp-point active" data-temp="22" data-time="Now">
+                                <span class="temp-label">22°</span>
+                                <span class="time-label">Now</span>
+                            </div>
+                            <div class="temp-point" data-temp="20" data-time="3PM">
+                                <span class="temp-label">20°</span>
+                                <span class="time-label">3PM</span>
+                            </div>
+                            <div class="temp-point" data-temp="18" data-time="6PM">
+                                <span class="temp-label">18°</span>
+                                <span class="time-label">6PM</span>
+                            </div>
+                            <div class="temp-point" data-temp="21" data-time="9PM">
+                                <span class="temp-label">21°</span>
+                                <span class="time-label">9PM</span>
+                            </div>
+                            <div class="temp-point" data-temp="24" data-time="12AM">
+                                <span class="temp-label">24°</span>
+                                <span class="time-label">12AM</span>
+                            </div>
+                            <div class="temp-point" data-temp="23" data-time="3AM">
+                                <span class="temp-label">23°</span>
+                                <span class="time-label">3AM</span>
+                            </div>
+                            <div class="temp-point" data-temp="22" data-time="6AM">
+                                <span class="temp-label">22°</span>
+                                <span class="time-label">6AM</span>
+                            </div>
+                            <div class="temp-point" data-temp="21" data-time="9AM">
+                                <span class="temp-label">21°</span>
+                                <span class="time-label">9AM</span>
+                            </div>
                         </div>
-                        <div class="current-temp">72°F</div>
+                        <div class="current-temp">22°C</div>
                         <div class="current-time">Now</div>
                     </div>
                 </div>
@@ -211,40 +235,9 @@
                 // Update temperature display
                 const temp = this.getAttribute('data-temp');
                 const time = this.getAttribute('data-time');
-                currentTempDisplay.textContent = temp + '°F';
+                currentTempDisplay.textContent = temp + '°C';
                 currentTimeDisplay.textContent = time;
             });
-        });
-
-        // Make hourly container scrollable with mouse drag
-        const hourlyContainer = document.getElementById('hourly-container');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        hourlyContainer.addEventListener('mousedown', (e) => {
-            isDown = true;
-            hourlyContainer.style.cursor = 'grabbing';
-            startX = e.pageX - hourlyContainer.offsetLeft;
-            scrollLeft = hourlyContainer.scrollLeft;
-        });
-
-        hourlyContainer.addEventListener('mouseleave', () => {
-            isDown = false;
-            hourlyContainer.style.cursor = 'grab';
-        });
-
-        hourlyContainer.addEventListener('mouseup', () => {
-            isDown = false;
-            hourlyContainer.style.cursor = 'grab';
-        });
-
-        hourlyContainer.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - hourlyContainer.offsetLeft;
-            const walk = (x - startX) * 2;
-            hourlyContainer.scrollLeft = scrollLeft - walk;
         });
 
         // Forecast cards interaction
@@ -270,6 +263,14 @@
                 // Update date
                 if (day !== 'Today') {
                     document.querySelector('.date').textContent = day;
+                } else {
+                    const now = new Date();
+                    document.querySelector('.date').innerHTML = now.toLocaleDateString('en-US', { 
+                        weekday: 'short', 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
                 }
             });
         });
