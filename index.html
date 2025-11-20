@@ -92,39 +92,39 @@
 
             <!-- Forecast Section -->
             <div class="forecast-section">
-                <div class="forecast-card active">
+                <div class="forecast-card active" data-temp="13" data-condition="Rainy" data-wind="1.42">
                     <div class="forecast-day">Today</div>
-                    <img src="images/clouds.png" class="forecast-icon" alt="Cloudy">
-                    <div class="forecast-detail">
-                        <span>Humidity</span>
-                        <span class="forecast-humidity">30%</span>
-                    </div>
-                </div>
-                
-                <div class="forecast-card">
-                    <div class="forecast-day">Nov 24</div>
-                    <img src="images/clouds.png" class="forecast-icon" alt="Cloudy">
+                    <img src="images/rain.png" class="forecast-icon" alt="Rainy">
                     <div class="forecast-detail">
                         <span>Humidity</span>
                         <span class="forecast-humidity">36%</span>
                     </div>
                 </div>
                 
-                <div class="forecast-card">
+                <div class="forecast-card" data-temp="18" data-condition="Cloudy" data-wind="2.15">
+                    <div class="forecast-day">Nov 24</div>
+                    <img src="images/clouds.png" class="forecast-icon" alt="Cloudy">
+                    <div class="forecast-detail">
+                        <span>Humidity</span>
+                        <span class="forecast-humidity">42%</span>
+                    </div>
+                </div>
+                
+                <div class="forecast-card" data-temp="22" data-condition="Clear" data-wind="1.85">
                     <div class="forecast-day">Nov 25</div>
                     <img src="images/clear.png" class="forecast-icon" alt="Clear">
                     <div class="forecast-detail">
                         <span>Humidity</span>
-                        <span class="forecast-humidity">20%</span>
+                        <span class="forecast-humidity">28%</span>
                     </div>
                 </div>
                 
-                <div class="forecast-card">
+                <div class="forecast-card" data-temp="25" data-condition="Clear" data-wind="1.65">
                     <div class="forecast-day">Nov 26</div>
                     <img src="images/clear.png" class="forecast-icon" alt="Clear">
                     <div class="forecast-detail">
                         <span>Humidity</span>
-                        <span class="forecast-humidity">15%</span>
+                        <span class="forecast-humidity">20%</span>
                     </div>
                 </div>
             </div>
@@ -255,9 +255,15 @@
                 const day = this.querySelector('.forecast-day').textContent;
                 const humidity = this.querySelector('.forecast-humidity').textContent;
                 const icon = this.querySelector('.forecast-icon').src;
+                const temp = this.getAttribute('data-temp');
+                const condition = this.getAttribute('data-condition');
+                const wind = this.getAttribute('data-wind');
                 
                 // Update main weather display
+                document.querySelector('.temperature').textContent = temp + '°';
+                document.querySelector('.weather-condition').textContent = condition;
                 document.querySelector('.humidity').textContent = humidity;
+                document.querySelector('.wind-speed').textContent = wind + ' km/h';
                 document.querySelector('.main-weather-icon').src = icon;
                 
                 // Update date
