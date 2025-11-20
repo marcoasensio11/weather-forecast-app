@@ -182,24 +182,51 @@ body {
 
 .temp-chart {
     position: relative;
-    height: 120px;
+    height: 140px;
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     border-radius: 15px;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .temp-line {
     position: relative;
-    width: 100%;
+    min-width: 100%;
+    width: max-content;
     height: 2px;
     background: #4A90E2;
     border-radius: 1px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 60px;
+    padding: 0 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+    scrollbar-width: thin;
+    scrollbar-color: #4A90E2 transparent;
+}
+
+.temp-line::-webkit-scrollbar {
+    height: 6px;
+}
+
+.temp-line::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.temp-line::-webkit-scrollbar-thumb {
+    background: #4A90E2;
+    border-radius: 3px;
+}
+
+.temp-line:active {
+    cursor: grabbing;
 }
 
 .temp-point {
@@ -211,6 +238,12 @@ body {
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.temp-point:hover {
+    transform: scale(1.2);
+    box-shadow: 0 2px 8px rgba(65, 150, 243, 0.3);
 }
 
 .temp-point.active {
@@ -218,14 +251,47 @@ body {
     height: 16px;
     background: #2196F3;
     box-shadow: 0 4px 12px rgba(65, 150, 243, 0.4);
+    transform: scale(1.1);
+}
+
+.temp-point::before {
+    content: attr(data-temp) '°';
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: #4A90E2;
+    white-space: nowrap;
+}
+
+.temp-point::after {
+    content: attr(data-time);
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #666;
+    white-space: nowrap;
 }
 
 .current-temp {
     position: absolute;
-    top: -40px;
+    top: 10px;
+    left: 20px;
     font-size: 24px;
     font-weight: 600;
     color: #4A90E2;
+}
+
+.current-time {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    font-size: 14px;
+    color: #666;
 }
 
 /* Forecast Section */
@@ -243,6 +309,7 @@ body {
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
+    user-select: none;
 }
 
 .forecast-card.active {

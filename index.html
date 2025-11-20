@@ -48,16 +48,20 @@
 
                 <!-- Temperature Chart Section -->
                 <div class="temperature-section">
-                    <h3>Temperature</h3>
+                    <h3>Hourly Forecast</h3>
                     <div class="temp-chart">
-                        <div class="temp-line">
-                            <div class="temp-point active" data-temp="72"></div>
-                            <div class="temp-point" data-temp="68"></div>
-                            <div class="temp-point" data-temp="65"></div>
-                            <div class="temp-point" data-temp="70"></div>
-                            <div class="temp-point" data-temp="75"></div>
+                        <div class="temp-line" id="hourly-container">
+                            <div class="temp-point active" data-temp="72" data-time="Now"></div>
+                            <div class="temp-point" data-temp="68" data-time="3PM"></div>
+                            <div class="temp-point" data-temp="65" data-time="6PM"></div>
+                            <div class="temp-point" data-temp="70" data-time="9PM"></div>
+                            <div class="temp-point" data-temp="75" data-time="12AM"></div>
+                            <div class="temp-point" data-temp="73" data-time="3AM"></div>
+                            <div class="temp-point" data-temp="71" data-time="6AM"></div>
+                            <div class="temp-point" data-temp="69" data-time="9AM"></div>
                         </div>
                         <div class="current-temp">72°F</div>
+                        <div class="current-time">Now</div>
                     </div>
                 </div>
             </div>
@@ -189,6 +193,85 @@
             if (e.key === "Enter") {
                 checkWeather(searchBox.value);
             }
+        });
+
+        // Hourly temperature points interaction
+        const tempPoints = document.querySelectorAll('.temp-point');
+        const currentTempDisplay = document.querySelector('.current-temp');
+        const currentTimeDisplay = document.querySelector('.current-time');
+        
+        tempPoints.forEach(point => {
+            point.addEventListener('click', function() {
+                // Remove active class from all points
+                tempPoints.forEach(p => p.classList.remove('active'));
+                
+                // Add active class to clicked point
+                this.classList.add('active');
+                
+                // Update temperature display
+                const temp = this.getAttribute('data-temp');
+                const time = this.getAttribute('data-time');
+                currentTempDisplay.textContent = temp + '°F';
+                currentTimeDisplay.textContent = time;
+            });
+        });
+
+        // Make hourly container scrollable with mouse drag
+        const hourlyContainer = document.getElementById('hourly-container');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        hourlyContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            hourlyContainer.style.cursor = 'grabbing';
+            startX = e.pageX - hourlyContainer.offsetLeft;
+            scrollLeft = hourlyContainer.scrollLeft;
+        });
+
+        hourlyContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            hourlyContainer.style.cursor = 'grab';
+        });
+
+        hourlyContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            hourlyContainer.style.cursor = 'grab';
+        });
+
+        hourlyContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - hourlyContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            hourlyContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Forecast cards interaction
+        const forecastCards = document.querySelectorAll('.forecast-card');
+        
+        forecastCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove active class from all cards
+                forecastCards.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked card
+                this.classList.add('active');
+                
+                // Get the forecast data from the card
+                const day = this.querySelector('.forecast-day').textContent;
+                const humidity = this.querySelector('.forecast-humidity').textContent;
+                const icon = this.querySelector('.forecast-icon').src;
+                
+                // Update main weather display
+                document.querySelector('.humidity').textContent = humidity;
+                document.querySelector('.main-weather-icon').src = icon;
+                
+                // Update date
+                if (day !== 'Today') {
+                    document.querySelector('.date').textContent = day;
+                }
+            });
         });
     </script>
 </body>
