@@ -2,6 +2,10 @@
 
 A beautiful and responsive weather forecast application that displays real-time weather information using the OpenWeatherMap API.
 
+## About
+
+Stay informed about the weather with this elegant web application. Simply enter any city name to instantly view current weather conditions, temperature, humidity, wind speed, and a 4-day forecast. The app features a clean, modern design with smooth animations and works seamlessly across all devices - from desktops to smartphones.
+
 ## Features
 
 - Real-time weather data
